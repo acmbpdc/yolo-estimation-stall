@@ -1,0 +1,90 @@
+ {% comment %} <!DOCTYPE html> {% endcomment %} 
+{% comment %} <html lang="en">
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1>Login to Continue</h1>
+        <form method="post" style="display: inline-block; text-align: left;">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div style="text-align: center;">
+                <button type="submit" style="padding: 10px 20px;">Login</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html> {% endcomment %} 
+
+
+{% load static %}
+{% load socialaccount %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Include Bootstrap CSS for better styling (Optional but Recommended) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GVYBDl2RX4YjtgEEIYaa5vCUNrghqMEI7yp+V5GcfCyE5Sz85fqg53g1xD7KPFQS" crossorigin="anonymous">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .social-btn {
+            margin-top: 15px;
+        }
+        .btn-google {
+            background-color: #db4437;
+            color: #fff;
+        }
+        .btn-google:hover {
+            background-color: #c23321;
+            color: #fff;
+        }
+        .btn-google i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    {% load socialaccount %} <!-- Load the socialaccount template tags -->
+    <div class="login-container">
+        <h2 class="text-center mb-4">Login to Continue</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="social-btn text-center">
+            <p class="mt-3">OR</p>
+            <a href="{% provider_login_url 'google' %}" class="btn btn-google btn-block" >
+                <i class="fab fa-google"></i> Login with Google
+            </a>
+        </div>
+    </div>
+
+    <!-- Include Font Awesome for Google Icon (Optional) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Include Bootstrap JS and dependencies (Optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdjTqYkcBEI3EL9+M3g0pjkRnO2gTfL72I62YujN6jDXyrS0BtM+cNllSxE5Oc" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2LcJG9hDUSeKFAHhVH5UG0jE89UuV+JRnpJxZuoY7c" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+ {% comment %} href="{% provider_login_url 'google' %}" {% endcomment %}
