@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from io import BytesIO
 import base64
+from .forms import RegisterForm
 
 # Load YOLOv5 model
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
@@ -92,3 +93,15 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return render(request, 'logout.html')
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()  # This saves the user to the database
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}! You can now log in.')
+            return redirect('login')  # Redirect to the login page after successful registration
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
