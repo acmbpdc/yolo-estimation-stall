@@ -19,6 +19,7 @@ from django.urls import path,include
 from quizapp import views
 from django.views.generic import TemplateView
 from django.contrib.auth.views import LogoutView
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +28,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')), # for allauth
     path('', TemplateView.as_view(template_name="login.html")),
     path('logout', LogoutView.as_view()),
+    
+    path('register/', views.register, name='register'),
     
     path('logout/', views.logout_view, name='logout'),
     path('', include('quizapp.urls')),

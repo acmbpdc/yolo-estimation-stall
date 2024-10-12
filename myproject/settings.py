@@ -152,12 +152,16 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/welcome.html'  # Redirect after successful login
-LOGOUT_REDIRECT_URL = '/logout.html'  # Redirect after logout
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # Optional: Disable email verification
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
+
+LOGOUT_REDIRECT_URL = '/login/'
+
+# Specify the login URL for @login_required decorator
+LOGIN_URL = '/login/'
 
 

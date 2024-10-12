@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <!-- Include Google Fonts for better typography -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -21,7 +21,7 @@
             align-items: center;
             height: 100vh;
         }
-        .login-container {
+        .register-container {
             max-width: 500px;
             padding: 60px 40px;
             background: rgba(0, 0, 0, 0.8);
@@ -37,10 +37,12 @@
             font-weight: bold;
             margin-bottom: 10px;
             display: block;
+            text-align: left;
         }
         .form-control {
+            width: 100%;
             padding: 12px;
-            height: 50px; /* Default height for inputs */
+            height: 50px;
             border-radius: 8px;
             font-size: 16px;
             background-color: #ffffff;
@@ -59,94 +61,55 @@
             font-weight: bold;
             transition: background 0.3s ease, transform 0.3s ease;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
         .btn-primary {
             background: linear-gradient(135deg, #3a3a3a, #1f1f1f);
             color: #ffffff;
             border: none;
+            width: 100%;
         }
         .btn-primary:hover {
             background: linear-gradient(135deg, #444444, #292929);
             transform: translateY(-5px);
         }
-        .button-wrapper {
-            margin-top: 50px; /* Move login button down */
+        .login-link {
+            margin-top: 20px;
+            display: block;
+            color: #76ff03;
+            text-decoration: none;
         }
-        .or-divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 30px 0;
+        .login-link:hover {
+            text-decoration: underline;
         }
-        .or-divider::before, .or-divider::after {
-            content: "";
-            flex: 1;
-            border-bottom: 1px solid #ddd;
-        }
-        .or-divider:not(:empty)::before {
-            margin-right: .75em;
-        }
-        .or-divider:not(:empty)::after {
-            margin-left: .75em;
-        }
-        .or-text {
-            font-size: 14px;
-            color: #bbb;
-            font-weight: bold;
-        }
-        .btn-google {
-            background-color: #db4437;
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-        .btn-google:hover {
-            background-color: #c23321;
-            transform: scale(1.05);
-        }
-        .btn-secondary {
-            background: linear-gradient(135deg, #555555, #333333);
-            color: #ffffff;
-            border: none;
-        }
-        
-        .btn-secondary:hover {
-            background: linear-gradient(135deg, #666666, #444444);
-            transform: translateY(-3px);
-        }
-        
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
+    <div class="register-container">
+        <h1>Register</h1>
         <form method="post">
             {% csrf_token %}
-            <label for="username">Username</label>
+            {{ form.non_field_errors }}
+            <label for="id_username">Username</label>
             {{ form.username|add_class:"form-control" }}
             {{ form.username.errors }}
 
-            <label for="password">Password</label>
-            {{ form.password|add_class:"form-control" }}
-            {{ form.password.errors }}
+            <label for="id_email">Email</label>
+            {{ form.email|add_class:"form-control" }}
+            {{ form.email.errors }}
 
-            <div class="button-wrapper">
-                <button type="submit" class="btn btn-primary btn-block">Login</button>
-            </div>
+            <label for="id_password1">Password</label>
+            {{ form.password1|add_class:"form-control" }}
+            {{ form.password1.errors }}
+
+            <label for="id_password2">Confirm Password</label>
+            {{ form.password2|add_class:"form-control" }}
+            {{ form.password2.errors }}
+
+            <button type="submit" class="btn btn-primary">Register</button>
         </form>
 
-        <div class="or-divider">
-            <span class="or-text">OR</span>
-        </div>
-
-        <a href="{% url 'register' %}" class="btn btn-secondary btn-block" style="margin-top: 20px;">
-            Register
-        </a>
+        <a href="{% url 'login' %}" class="login-link">Already have an account? Login here.</a>
     </div>
-
-    <!-- Include Font Awesome for Google Icon -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>

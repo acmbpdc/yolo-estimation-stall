@@ -15,6 +15,7 @@ def save_user_profile(sender, instance, **kwargs):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)  # Default points set to 0
+    bio = models.TextField(blank=True)
 
     def __str__(self):
         return self.user.username
