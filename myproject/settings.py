@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,13 +40,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'quizapp.apps.MyAppConfig',
     #'crispy_forms',
-    'quizapp',
+    #'quizapp',
 ]
 
 MIDDLEWARE = [
@@ -164,4 +168,4 @@ LOGOUT_REDIRECT_URL = '/login/'
 # Specify the login URL for @login_required decorator
 LOGIN_URL = '/login/'
 
-
+os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"

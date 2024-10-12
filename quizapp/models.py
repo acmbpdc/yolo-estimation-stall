@@ -22,7 +22,7 @@ class UserProfile(models.Model):
 
 class QuizAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    question_number = models.IntegerField()
+    question_number = models.IntegerField(null=True)
     score = models.IntegerField(default=0)  # Score for the specific attempt
     answer = models.CharField(max_length=255)  # User's answer
 
