@@ -72,7 +72,7 @@
 <body>
     <div class="question-container">
         <h1>Question 2</h1>
-        <p>What percentage of people use a keyboard?</p>
+        <p>{{question_text}}</p>
         
         {% if error %}
             <p class="error-message">{{ error }}</p>
@@ -81,7 +81,7 @@
         <form method="post">
             {% csrf_token %}
             <div>
-                <input type="text" name="answer" placeholder="Enter percentage" required>
+                <input type="number" name="answer" placeholder="Enter percentage" required>
             </div>
             <div>
                 <button type="submit" class="btn">Submit</button>

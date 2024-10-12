@@ -22,6 +22,7 @@ class Question(models.Model):
     text = models.CharField(max_length=255)  # The question text
     correct_answer = models.CharField(max_length=255)  # The correct answer
     # You can add other fields like choices if you want multiple-choice questions
-
+    statistic_question = models.CharField(default='a',max_length=255,null=True)
+    statistic_correct_answer = models.IntegerField(default=0,null=True)
     def __str__(self):
         return self.text

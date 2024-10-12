@@ -61,11 +61,11 @@
         <h1>Welcome!</h1>
         <p>Select a question to begin:</p>
         <ul>
-            <li><a href="{% url 'quiz_template' %}">Question 1</a></li>
-            <li><a href="#">Question 2</a></li>
-            <li><a href="#">Question 3</a></li>
-            <li><a href="#">Question 4</a></li>
-            <li><a href="#">Question 5</a></li>
+            {% for question in questions %}
+
+            <li>
+            <a href="{% url 'quiz_template' question.id %}">Xx</a></li>
+            {% endfor %}    
         </ul>
     </div>
 </body>
