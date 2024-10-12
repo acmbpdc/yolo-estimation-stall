@@ -1,31 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome</title>
+    <!-- Include Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #2c2c2c, #141414);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 15px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #3a3a3a, #1f1f1f);
+            border-radius: 25px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        a:hover {
+            background: linear-gradient(135deg, #444444, #292929);
+            transform: translateY(-5px);
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px;">
+    <div class="container">
         <h1>Welcome!</h1>
         <p>Select a question to begin:</p>
-        <div style="display: inline-block; text-align: left;">
-            <ul style="list-style-type: none; padding: 0;">
-                <li style="margin: 10px;">
-                    <a href="{% url 'question_one' %}" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Question 1</a>
-                </li>
-                <li style="margin: 10px;">
-                    <a href="#" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Question 2</a>
-                </li>
-                <li style="margin: 10px;">
-                    <a href="#" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Question 3</a>
-                </li>
-                <li style="margin: 10px;">
-                    <a href="#" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Question 4</a>
-                </li>
-                <li style="margin: 10px;">
-                    <a href="#" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Question 5</a>
-                </li>
-            </ul>
-        </div>
+        <ul>
+            <li><a href="{% url 'question_one' %}">Question 1</a></li>
+            <li><a href="#">Question 2</a></li>
+            <li><a href="#">Question 3</a></li>
+            <li><a href="#">Question 4</a></li>
+            <li><a href="#">Question 5</a></li>
+        </ul>
     </div>
 </body>
 </html>

@@ -1,24 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question 2</title>
+    <!-- Include Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #343434);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+        .question-container {
+            text-align: center;
+            background-color: #2e2e2e;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #f1f1f1;
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        form {
+            display: inline-block;
+            width: 100%;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #666;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: #000;
+        }
+        input[type="text"]::placeholder {
+            color: #888;
+        }
+        .btn {
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: #ff4d4d;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px;">
+    <div class="question-container">
         <h1>Question 2</h1>
         <p>What percentage of people use a keyboard?</p>
+        
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <p class="error-message">{{ error }}</p>
         {% endif %}
-        <form method="post" style="display: inline-block; text-align: left;">
+        
+        <form method="post">
             {% csrf_token %}
             <div>
                 <input type="text" name="answer" placeholder="Enter percentage" required>
             </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="submit" style="padding: 10px 20px;">Submit</button>
+            <div>
+                <button type="submit" class="btn">Submit</button>
             </div>
         </form>
     </div>
 </body>
 </html>
+

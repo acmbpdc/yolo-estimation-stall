@@ -1,25 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question 1</title>
+    <style>
+        body {
+            background: #1a1a1a; /* Dark background */
+            font-family: 'Arial', sans-serif;
+            color: #f0f0f0; /* Light grey text for contrast */
+            text-align: center;
+            margin: 0;
+            padding: 50px 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px; /* Limit the width for better readability */
+            margin: auto; /* Center the container */
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.8); /* Semi-transparent dark background */
+            border-radius: 12px; /* Rounded corners */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+        }
+        h1 {
+            font-size: 2.5rem; /* Larger font size for the heading */
+            margin-bottom: 20px; /* Spacing below the heading */
+            color: #76ff03; /* Neon green for a pop of color */
+        }
+        p {
+            font-size: 1.2rem; /* Slightly larger text for the question */
+            margin-bottom: 30px; /* Spacing below the question */
+        }
+        #video {
+            border: 2px solid #ffffff; /* White border */
+            border-radius: 8px;
+            width: 100%; /* Responsive width */
+            max-width: 640px; /* Max width for larger screens */
+            height: auto; /* Auto height to maintain aspect ratio */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            margin-bottom: 20px; /* Spacing below the video */
+        }
+        .error {
+            color: #e74c3c; /* Bright red for error messages */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        button {
+            background-color: #444444; /* Dark button color */
+            color: #f0f0f0; /* Light text */
+            border: none;
+            padding: 12px 25px; /* Increased padding for better touch area */
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Button shadow */
+            margin: 5px; /* Spacing between buttons */
+        }
+        button:hover {
+            background-color: #666666; /* Slightly lighter on hover */
+            transform: scale(1.05); /* Slight zoom effect */
+        }
+        form {
+            margin-top: 20px; /* Spacing above the form */
+        }
+        input[type="hidden"] {
+            display: none; /* Keep hidden input invisible */
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px;">
+    <div class="container">
         <h1>Question 1</h1>
         <p>What is clicky, soothing, and has different colors?</p>
+        
         {% if error %}
-            <p style="color: red;">{{ error }}</p>
+            <p class="error">{{ error }}</p>
         {% endif %}
-        <form method="post" enctype="multipart/form-data" style="display: inline-block; text-align: left;">
+        
+        <video id="video" autoplay></video>
+        <button id="snap">Take Photo</button>
+        <canvas id="canvas" width="640" height="480"></canvas>
+        
+        <form method="post" id="image-form">
             {% csrf_token %}
+            <input type="hidden" name="image" id="image-input" required>
             <div>
-                <label>Upload an image:</label><br>
-                <input type="file" name="image" required>
-            </div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button type="submit" style="padding: 10px 20px;">Submit</button>
+                <button type="submit">Submit</button>
             </div>
         </form>
     </div>
+
+    <script>
+        // Access the camera
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const imageInput = document.getElementById('image-input');
+
+        // Use getUserMedia to access the webcam
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                video.srcObject = stream; // Show the video feed
+            })
+            .catch(function(error) {
+                console.error("Error accessing camera: ", error);
+            });
+
+        // Capture a photo when the button is clicked
+        document.getElementById('snap').addEventListener('click', function() {
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, 640, 480); // Draw the video frame to the canvas
+            const imageData = canvas.toDataURL('image/png'); // Get the image data as base64
+
+            // Set the value of the hidden input to the base64 data
+            imageInput.value = imageData; 
+            console.log("Captured image data:", imageInput.value); // Debugging output
+        });
+    </script>
 </body>
 </html>

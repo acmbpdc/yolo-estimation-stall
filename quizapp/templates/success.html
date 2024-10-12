@@ -1,13 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success!</title>
+    <!-- Include Google Fonts for better typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #4caf50, #3e8e41);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            text-align: center;
+        }
+        .success-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        a {
+            text-decoration: none;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+            font-size: 1.1rem;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+        .icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .icon:hover {
+            transform: scale(1.2); /* Scale icon on hover */
+            color: #76ff03; /* Optional: change color on hover */
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; margin-top: 50px;">
+    <div class="success-container">
+        <div class="icon">&#10004;</div> <!-- Checkmark icon -->
         <h1>Success!</h1>
         <p>{{ message }}</p>
-        <p><a href="{% url 'welcome' %}" style="text-decoration: none; padding: 10px 20px; border: 1px solid black;">Return to Welcome Page</a></p>
+        <p>
+            <a href="{% url 'welcome' %}">Return to Welcome Page</a>
+        </p>
     </div>
 </body>
 </html>
