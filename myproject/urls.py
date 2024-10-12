@@ -31,8 +31,7 @@ urlpatterns = [
     
     path('register/', views.register, name='register'),
     
-    path('logout/', views.logout_view, name='logout'),
-    path('', include('quizapp.urls')),
+    
     # Default route to login page
     path('quiz/', include('quizapp.urls')),  # Include the app-specific URLs
 ]

@@ -12,6 +12,11 @@ from django.contrib import messages
 from io import BytesIO
 import base64
 from .forms import RegisterForm
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+from .models import UserProfile
+import random
 
 # Load YOLOv5 model
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
@@ -34,65 +39,81 @@ def login_view(request):
 def welcome_view(request):
     return render(request, 'welcome.html')
 
+questions = [
+    {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},
+    {"type": "image", "text": "Upload an image containing a car", "correct_label": "car"},
+    {"type": "text", "text": "What percentage of the brain is water?", "correct_answer": "90%"},
+    {"type": "text", "text": "What is the largest mammal on Earth?", "correct_answer": "blue whale"},
+    {"type": "text", "text": "How many continents are there?", "correct_answer": "7"},
+]
 
-@login_required
-def question_one_view(request):
+def quiz_view(request):
+    # Define your questions
+    questions = [
+        {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},
+        {"type": "text", "text": "What percentage of the brain is water?", "correct_answer": "90%"},
+    ]
+
+    # Check if the user is on question 1 or question 2
+    step = request.session.get('quiz_step', 1)
+    
+    # Select the current question based on the step
+    question = questions[step - 1]  # Access the question based on the current step
+
+    # Handle POST request (answer submission)
     if request.method == 'POST':
-        img_data = request.POST.get('image')
+        if question['type'] == 'image':
+            img_data = request.POST.get('image')
 
-        if not img_data:  # Check if img_data is None or empty
-            return render(request, 'question_one.html', {'error': 'No image data found!'})
+            if not img_data:
+                return render(request, 'quiz_template.html', {'error': 'No image data found!', 'question': question})
 
-        try:
-            header, encoded = img_data.split(',', 1)  # Attempt to split the data
-            img = Image.open(BytesIO(base64.b64decode(encoded)))  # Decode the image
-        except ValueError:
-            return render(request, 'question_one.html', {'error': 'Invalid image data!'})
+            try:
+                header, encoded = img_data.split(',', 1)
+                img = Image.open(BytesIO(base64.b64decode(encoded)))
+            except (ValueError, base64.binascii.Error, IOError):
+                return render(request, 'quiz_template.html', {'error': 'Invalid image data!', 'question': question})
 
-        # Convert image to YOLO compatible format
-        img = img.convert("RGB")
+            # Run YOLO model on the image
+            img = img.convert("RGB")
+            results = model(img)
+            labels = results.xyxyn[0][:, -1].cpu().numpy()
+            detected_classes = [model.names[int(label)] for label in labels]
+            print("Detected Classes:", detected_classes)
 
-        # Run YOLO model on the image
-        results = model(img)
+            # Check if the correct object is detected
+            if question['correct_label'] in detected_classes:
+                user_profile = UserProfile.objects.get(user=request.user)
+                user_profile.points += 10
+                user_profile.save()
+                messages.success(request, 'Correct! You earned 10 points.')
+                
+                # Move to the next question (sub-question)
+                request.session['quiz_step'] = 2
+                return redirect('quiz_view')  # Reload quiz_view to get the next question
+            else:
+                return render(request, 'quiz_template.html', {'error': 'Wrong Answer!', 'question': question})
 
-        # Extract labels detected
-        labels = results.xyxyn[0][:, -1].cpu().numpy()
+        elif question['type'] == 'text':
+            answer = request.POST.get('answer')
+            if answer.lower() == question['correct_answer'].lower():
+                QuizAttempt.objects.create(user=request.user, question_number=step, score=10, answer=answer)
+                user_profile = UserProfile.objects.get(user=request.user)
+                user_profile.points += 10
+                user_profile.save()
+                messages.success(request, 'Correct! You earned 10 points.')
 
-        # Print all labels detected for debugging
-        detected_classes = [model.names[int(label)] for label in labels]
-        print("Detected Classes:", detected_classes)
+                # End the quiz after the last question
+                request.session['quiz_step'] = 1  # Reset for the next attempt if needed
+                return redirect('welcome')  # Redirect to the welcome page or a success page
+            else:
+                return render(request, 'quiz_template.html', {'error': 'Incorrect answer, please try again.', 'question': question})
 
-        # Check if "keyboard" is detected
-        for i in detected_classes:
-            if i=="person": # Adjust to match the correct label
-                # Update user points in the database
-                user_profile = UserProfile.objects.get(user=request.user)  # Get the user profile
-                user_profile.points += 10  # Add 10 points
-                user_profile.save()  # Save the updated profile
-
-                return redirect('question_two')  # Redirect to the next question
-
-        return render(request, 'question_one.html', {'error': 'Wrong Answer!'})
-
-    return render(request, 'question_one.html')
-
-
-
-@login_required
-def question_two_view(request):
-    if request.method == 'POST':
-        answer = request.POST.get('answer')
-        if answer == '90%':
-            QuizAttempt.objects.create(user=request.user, question_number=2, score=10, answer=answer)
-            return render(request, 'success.html', {'message': 'Correct! You have been awarded points.'})
-        else:
-            return render(request, 'question_two.html', {'error': 'Incorrect answer, please try again.'})
-    return render(request, 'question_two.html')
-
-def logout_view(request):
-    logout(request)
-    messages.success(request, "You have been logged out successfully.")
-    return render(request, 'logout.html')
+    # GET request (load the question)
+    return render(request, 'quiz_template.html', {
+        'question_text': question['text'],  # Pass the question text
+        'error': None  # Or any error message
+    })
 
 def register(request):
     if request.method == 'POST':
@@ -100,8 +121,11 @@ def register(request):
         if form.is_valid():
             form.save()  # This saves the user to the database
             username = form.cleaned_data.get('username')
+            #UserProfile.objects.create()
+            #UserProfile.objects.save()
             messages.success(request, f'Account created for {username}! You can now log in.')
             return redirect('login')  # Redirect to the login page after successful registration
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})
+
