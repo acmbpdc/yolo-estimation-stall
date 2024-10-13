@@ -69,22 +69,21 @@
             {% for question in questions %}
                 <li>
                     {% if question.id in completed_question_ids %}
-                    <script> console.log(`{{completed_question_ids}}`);</script>
-                    <a href="{% url 'quiz_template' question.id %}" class="completed">
+                        <a href="" class="completed">Completed</a>
                     {% else %}
-                    <a href="{% url 'quiz_template' question.id %}">
-                        {% if question.id == 3 %}
-                            Easy
-                        {% elif question.id == 4 %}
-                            Medium
-                        {% elif question.id == 5 %}
-                            Hard
-                        {% elif question.id == 6 %}
-                            Impossible    
-                        {% else %}
-                            Question {{ question.id }}
-                        {% endif %}
-                    </a>
+                        <a href="{% url 'quiz_template' question.id %}">
+                            {% if question.id == 3 %}
+                                Easy
+                            {% elif question.id == 4 %}
+                                Medium
+                            {% elif question.id == 5 %}
+                                Hard
+                            {% elif question.id == 6 %}
+                                Impossible    
+                            {% else %}
+                                Question {{ question.id }}
+                            {% endif %}
+                        </a>
                     {% endif %}
                 </li>
             {% endfor %}

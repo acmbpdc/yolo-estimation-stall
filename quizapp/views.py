@@ -45,9 +45,12 @@ def welcome_view(request):
         # Check for question completion
         quiz_attempt = QuizAttempt.objects.filter(user=request.user, question=question)
         if quiz_attempt.count() >= 2:
-            completed_question_ids.append(question.id)
+            if question.id not in completed_question_ids:
+                completed_question_ids.append(question.id)
     
     score = UserProfile.objects.get(user=request.user).total_score
+
+    print("Completed Question IDs:", completed_question_ids)
         
     return render(
         request,
@@ -58,13 +61,13 @@ def welcome_view(request):
 def success_view(request):
     return render(request,'success.html')
 
-questions = [
-    {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},
-    {"type": "image", "text": "Upload an image containing a car", "correct_label": "car"},
-    {"type": "text", "text": "What percentage of the brain is water?", "correct_answer": "90%"},
-    {"type": "text", "text": "What is the largest mammal on Earth?", "correct_answer": "blue whale"},
-    {"type": "text", "text": "How many continents are there?", "correct_answer": "7"},
-]
+# questions = [
+#     {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},
+#     {"type": "image", "text": "Upload an image containing a car", "correct_label": "car"},
+#     {"type": "text", "text": "What percentage of the brain is water?", "correct_answer": "90%"},
+#     {"type": "text", "text": "What is the largest mammal on Earth?", "correct_answer": "blue whale"},
+#     {"type": "text", "text": "How many continents are there?", "correct_answer": "7"},
+# ]
 
 def quiz_view(request, question_id):
     # Fetch the question object once
@@ -112,7 +115,7 @@ def quiz_view(request, question_id):
             print("Detected Classes:", detected_classes)
 
             # Check if the correct object is detected
-            if current_question['correct_label'].islower() in detected_classes:
+            if current_question['correct_label'].lower() in detected_classes:
                 user_profile = UserProfile.objects.get(user=request.user)
                 user_profile.total_score += 10
                 user_profile.save()
@@ -134,7 +137,7 @@ def quiz_view(request, question_id):
                 actual = question.statistic_correct_answer
 
                 # Calculate score using the formula: 100 - |actual - predicted|
-                score = 100 - abs(actual - predicted)
+                score = 10 - abs(actual - predicted)/10
 
                 # Create the quiz attempt and save the score
                 QuizAttempt.objects.create(
