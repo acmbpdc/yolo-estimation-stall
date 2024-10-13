@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 if DEBUG:
     load_dotenv(find_dotenv())
@@ -123,7 +123,7 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'root',
         'PASSWORD': os.environ['MYSQL_ROOT_PASSWORD'],
-        'HOST': 'junction.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
+        'HOST': 'junction.proxy.rlwy.net' if DEBUG else 'mysql-azl2.railway.internal',
         'PORT': '58273' if DEBUG else '3306',
     }
 }
