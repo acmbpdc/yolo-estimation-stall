@@ -38,7 +38,22 @@ def login_view(request):
 @login_required
 def welcome_view(request):
     questions=Question.objects.all()
-    return render(request, 'welcome.html',{'questions':questions})
+    completed_question_ids = []
+
+    score = 0
+    for question in questions:
+        # Check for question completion
+        quiz_attempt = QuizAttempt.objects.filter(user=request.user, question=question)
+        if quiz_attempt.count() >= 2:
+            completed_question_ids.append(question.id)
+    
+    score = UserProfile.objects.get(user=request.user).points
+        
+    return render(
+        request,
+        'welcome.html',
+        {'questions': questions, 'completed_question_ids': completed_question_ids, 'score': score}
+    )
 
 questions = [
     {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},

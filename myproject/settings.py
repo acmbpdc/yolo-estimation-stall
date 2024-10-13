@@ -28,7 +28,14 @@ SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "yolo-estimation-stall-production.up.railway.app",
+    ".railway.app"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://yolo-estimation-stall-production.up.railway.app"
+]
 
 
 # Application definition

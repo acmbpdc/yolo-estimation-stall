@@ -54,16 +54,26 @@
             background: linear-gradient(135deg, #444444, #292929);
             transform: translateY(-5px);
         }
+
+        .completed {
+            background: linear-gradient(135deg, #2c7c2c, #145414);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome!</h1>
-        <p>Select a question to begin:</p>
+        <p>Your Score: {{score}}</p>
+        <p><strong>Select a question to begin:</strong></p>
         <ul>
             {% for question in questions %}
                 <li>
+                    {% if question.id in completed_question_ids %}
+                    <script> console.log(`{{completed_question_ids}}`);</script>
+                    <a href="{% url 'quiz_template' question.id %}" class="completed">
+                    {% else %}
                     <a href="{% url 'quiz_template' question.id %}">
+                    {% endif %}
                         {% if question.id == 1 %}
                             Easy
                         {% elif question.id == 2 %}
@@ -72,6 +82,7 @@
                             Question {{ question.id }}
                         {% endif %}
                     </a>
+
                 </li>
             {% endfor %}
         </ul>
