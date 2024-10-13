@@ -130,12 +130,12 @@
         }
 
         // Initialize with the front camera
-        startCamera('user');
+        startCamera('environment');
 
         // Switch camera on button click
         switchButton.addEventListener('click', () => {
-            isFrontCamera = !isFrontCamera;
-            const facingMode = isFrontCamera ? 'user' : 'environment';
+            isBackCamera = !isBackCamera;
+            const facingMode = isBackCamera ? 'environment' : 'user';
             startCamera(facingMode);
         });
 
