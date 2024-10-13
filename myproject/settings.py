@@ -14,9 +14,6 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv, find_dotenv
 
-load_dotenv(find_dotenv())
-
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,11 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'f*jh@^7vx+t_gftb(z2(ilmx6#qf&lrbhwgl13u-dtq48b!^5f'
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+
+if DEBUG:
+    load_dotenv(find_dotenv())
+else:
+    load_dotenv('.env.prod')
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
