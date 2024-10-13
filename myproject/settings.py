@@ -26,13 +26,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    "https://snapmath.acmbpdc.org"
+    "127.0.0.1",
+    "web-production-d54b5.up.railway.app",
+    ".railway.app",
+    "snapmath.acmbpdc.org"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1",
+    "https://web-production-d54b5.up.railway.app",
     "https://snapmath.acmbpdc.org"
 ]
 

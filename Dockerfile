@@ -6,7 +6,10 @@ RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libsm6 \
     libxext6 \
-    libxrender1
+    libxrender1 \
+    pkg-config \
+    default-libmysqlclient-dev \
+    build-essential
 
 # Set the working directory in the container
 WORKDIR /app
