@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)  # Default points set to 0
-    bio = models.TextField(blank=True)
+    has_completed_quiz = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
@@ -26,3 +26,4 @@ class Question(models.Model):
     statistic_correct_answer = models.IntegerField(default=0,null=True)
     def __str__(self):
         return self.text
+

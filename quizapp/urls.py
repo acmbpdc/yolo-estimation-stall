@@ -10,4 +10,5 @@ urlpatterns = [
     #path('question2/', views.question_two_view, name='question_two'),
     path('quiz/', views.quiz_view, name='quiz_template'),  # Will show a random question
     path('quiz/<int:question_id>/', views.quiz_view, name='quiz_template'),
+    #path('success/', views.success_view, name='success'),
 ]
