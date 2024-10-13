@@ -69,11 +69,16 @@
         input[type="hidden"] {
             display: none; /* Keep hidden input invisible */
         }
+        .back-btn {
+            font-size: 4em;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Quiz Question</h1>
+        <a class="back-btn" href="{% url 'welcome' %}" class="back-btn">🔙</a>
         <p>{{ question_text }}</p> <!-- Question from the backend -->
 
         <!-- Display error if any -->
