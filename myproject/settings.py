@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "yolo-estimation-stall-production.up.railway.app"
+    "yolo-estimation-stall-production.up.railway.app",
+    ".railway.app"
 ]
 
 
