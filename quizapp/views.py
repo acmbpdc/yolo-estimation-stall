@@ -109,9 +109,9 @@ def quiz_view(request, question_id):
             print("Detected Classes:", detected_classes)
 
             # Check if the correct object is detected
-            if current_question['correct_label'] in detected_classes:
+            if current_question['correct_label'].islower() in detected_classes:
                 user_profile = UserProfile.objects.get(user=request.user)
-                user_profile.points += 10
+                user_profile.total_score += 10
                 user_profile.save()
                 QuizAttempt.objects.create(user=request.user, question=question, score=10, answer='Image Answer')
                 messages.success(request, 'Correct! You earned 10 points.')
@@ -123,19 +123,33 @@ def quiz_view(request, question_id):
                 return render(request, 'quiz_template.html', {'error': 'Wrong Answer!', 'question': current_question})
 
         elif current_question['type'] == 'text':
-            answer = request.POST.get('answer')
-            if int(answer) == current_question['correct_answer']:
-                QuizAttempt.objects.create(user=request.user, question=question, score=10, answer=answer)
+            predicted = request.POST.get('answer')
+            #predicted = request.POST.get('predicted')
+            
+            if predicted.isdigit():
+                predicted = int(predicted)
+                actual = question.statistic_correct_answer
+
+                # Calculate score using the formula: 100 - |actual - predicted|
+                score = 100 - abs(actual - predicted)
+
+                # Create the quiz attempt and save the score
+                QuizAttempt.objects.create(
+                    user=request.user,
+                    question=question,
+                    score=score,
+                    actual=actual,
+                    predicted=predicted
+                )
                 user_profile = UserProfile.objects.get(user=request.user)
-                user_profile.points += 10
+                user_profile.total_score += score
                 user_profile.save()
-                QuizAttempt.objects.create(user=request.user, question=question,score=10)
-                messages.success(request, 'Correct! You earned 10 points.')
+                messages.success(request, 'Correct! You earned points.')
                 #messages.success(request, 'Correct! You earned 10 points.')
 
                 # End the quiz after the last question
                 request.session[session_key] = 1  # Reset for the next attempt if needed
-                return redirect('welcome')  # Redirect to the welcome page or a success page
+                return redirect('success')  # Redirect to the welcome page or a success page
             else:
                 return render(request, 'question_two.html', {'error': 'Incorrect answer, please try again.', 'question': current_question})
 

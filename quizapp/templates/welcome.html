@@ -73,11 +73,14 @@
                     <a href="{% url 'quiz_template' question.id %}" class="completed">
                     {% else %}
                     <a href="{% url 'quiz_template' question.id %}">
-                    {% endif %}
-                        {% if question.id == 1 %}
+                        {% if question.id == 3 %}
                             Easy
-                        {% elif question.id == 2 %}
+                        {% elif question.id == 4 %}
                             Medium
+                        {% elif question.id == 5 %}
+                            Hard
+                        {% elif question.id == 6 %}
+                            Impossible    
                         {% else %}
                             Question {{ question.id }}
                         {% endif %}
