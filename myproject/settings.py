@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0'
+SECRET_KEY = 'f*jh@^7vx+t_gftb(z2(ilmx6#qf&lrbhwgl13u-dtq48b!^5f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -116,9 +116,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': 'kwUSRYqxdJpUAwAKkVnKMDPWxMbLIDtY',
+        'PASSWORD': 'EgAXpHVUOSNpDeASzLAAOydVEPcSXZGy',
         'HOST': 'autorack.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
-        'PORT': '30638' if DEBUG else '3306',
+        'PORT': '33360' if DEBUG else '3306',
     }
 }
 
@@ -164,6 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

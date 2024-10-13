@@ -27,5 +27,7 @@ EXPOSE 8000
 ENV NAME World
 
 # Run the application
+RUN python manage.py collectstatic --noinput
+
 CMD ["gunicorn", "myproject.wsgi", "--bind", "0.0.0.0:8000"]
 
