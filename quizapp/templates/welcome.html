@@ -62,11 +62,17 @@
         <p>Select a question to begin:</p>
         <ul>
             {% for question in questions %}
-
-            <li>
-            <a href="{% url 'quiz_template' question.id %}">Xx</a></li>
-            {% endfor %}    
+                <li>
+                    <a href="{% url 'quiz_template' question.id %}">
+                        {% if question.id == 1 %}
+                            Easy
+                        {% elif question.id == 2 %}
+                            Medium
+                        {% else %}
+                            Question {{ question.id }}
+                        {% endif %}
+                    </a>
+                </li>
+            {% endfor %}
         </ul>
     </div>
-</body>
-</html>
