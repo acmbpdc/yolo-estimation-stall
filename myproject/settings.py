@@ -121,8 +121,8 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'root',
         'PASSWORD': os.environ['MYSQL_ROOT_PASSWORD'],
-        'HOST': 'autorack.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
-        'PORT': '33360' if DEBUG else '3306',
+        'HOST': 'junction.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
+        'PORT': '58273' if DEBUG else '3306',
     }
 }
 
