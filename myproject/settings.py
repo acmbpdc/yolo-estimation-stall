@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv())
 
 
 
@@ -117,7 +120,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'railway',
         'USER': 'root',
-        'PASSWORD': 'EgAXpHVUOSNpDeASzLAAOydVEPcSXZGy',
+        'PASSWORD': os.environ['MYSQL_ROOT_PASSWORD'],
         'HOST': 'autorack.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
         'PORT': '33360' if DEBUG else '3306',
     }

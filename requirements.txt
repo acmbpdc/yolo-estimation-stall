@@ -52,3 +52,4 @@ urllib3==2.2.3
 mysqlclient==2.2.4
 setuptools>=70.0.0
 whitenoise==6.7.0
+python-dotenv==1.0.1
