@@ -142,7 +142,11 @@
         // Capture photo on button click
         document.getElementById('snap').addEventListener('click', () => {
             const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.width = video.clientWidth; 
+            canvas.height = video.clientHeight;
+
+            context.drawImage(video, 0, 0, video.clientWidth, video.clientHeight);
             const imageData = canvas.toDataURL('image/png'); // Get base64 image data
             imageInput.value = imageData; // Store in hidden input for submission
             console.log("Captured image data:", imageInput.value); // Debugging output
