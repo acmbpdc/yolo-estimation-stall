@@ -33,6 +33,10 @@ ALLOWED_HOSTS = [
     ".railway.app"
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://yolo-estimation-stall-production.up.railway.app"
+]
+
 
 # Application definition
 
