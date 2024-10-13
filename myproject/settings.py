@@ -29,12 +29,11 @@ SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "yolo-estimation-stall-production.up.railway.app",
-    ".railway.app"
+    "https://snapmath.acmbpdc.org"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://yolo-estimation-stall-production.up.railway.app"
+    "https://snapmath.acmbpdc.org"
 ]
 
 
@@ -170,9 +169,9 @@ ACCOUNT_EMAIL_REQUIRED = True
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/quiz/login/'
 
 # Specify the login URL for @login_required decorator
-LOGIN_URL = '/login/'
+LOGIN_URL = '/quiz/login/'
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"

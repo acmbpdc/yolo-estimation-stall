@@ -47,13 +47,16 @@ def welcome_view(request):
         if quiz_attempt.count() >= 2:
             completed_question_ids.append(question.id)
     
-    score = UserProfile.objects.get(user=request.user).points
+    score = UserProfile.objects.get(user=request.user).total_score
         
     return render(
         request,
         'welcome.html',
         {'questions': questions, 'completed_question_ids': completed_question_ids, 'score': score}
     )
+
+def success_view(request):
+    return render(request,'success.html')
 
 questions = [
     {"type": "image", "text": "Upload an image containing a person", "correct_label": "person"},
