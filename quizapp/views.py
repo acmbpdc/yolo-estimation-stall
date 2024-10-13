@@ -18,6 +18,7 @@ from django.contrib.auth.models import User
 from .models import UserProfile
 import random
 
+#sai
 # Load YOLOv5 model
 model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
 
