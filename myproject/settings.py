@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@#)c!11+zw$it5)fkgww#7dxwrf_i8dr8%s8n^s%jx9aeg(n&0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://127.0.0.1",
+    "http://127.0.0.1:8000",
     "https://web-production-d54b5.up.railway.app",
     "https://snapmath.acmbpdc.org"
 ]
@@ -117,8 +117,8 @@ DATABASES = {
         'NAME': 'railway',
         'USER': 'root',
         'PASSWORD': 'kwUSRYqxdJpUAwAKkVnKMDPWxMbLIDtY',
-        'HOST': 'autorack.proxy.rlwy.net',
-        'PORT': '30638',
+        'HOST': 'autorack.proxy.rlwy.net' if DEBUG else 'mysql.railway.internal',
+        'PORT': '30638' if DEBUG else '3306',
     }
 }
 
